@@ -14,7 +14,7 @@ namespace GestEase.Models
         public int? CategorieId { get; set; }
 
         [Column("description_sommaire")]
-        public string DescriptionSommaire { get; set; } = string.Empty;
+        public string? DescriptionSommaire { get; set; }  // ✅ peut être NULL
 
         [Column("prix_liste")]
         public double? PrixListe { get; set; }
@@ -26,13 +26,13 @@ namespace GestEase.Models
         public int? QuantiteMin { get; set; }
 
         [Column("date_mise_a_jour")]
-        public DateTime? DateMiseAJour { get; set; } 
+        public DateTime? DateMiseAJour { get; set; }
 
         [Column("fournisseur_id")]
         public int? FournisseurId { get; set; }
 
         [Column("code_fournisseur")]
-        public string CodeFournisseur { get; set; } = string.Empty;
+        public string? CodeFournisseur { get; set; }  // ✅ peut être NULL
 
         [ForeignKey("FournisseurId")]
         public Fournisseur? Fournisseur { get; set; }

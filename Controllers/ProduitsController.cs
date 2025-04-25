@@ -16,40 +16,22 @@ namespace GestEase.Controllers
             _context = context;
         }
 
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> GetProduits()
+        public async Task<ActionResult<IEnumerable<Produit>>> GetProduits()
         {
             try
             {
-                var produits = await _context.Produits
-                    .AsNoTracking()
-                    .Select(p => new
-                    {
-                        p.Id,
-                        p.Description,
-                        p.CategorieId,
-                        p.DescriptionSommaire,
-                        p.PrixListe,
-                        p.PrixUnitaire,
-                        p.QuantiteMin,
-                        p.DateMiseAJour,
-                        p.FournisseurId,
-                        p.CodeFournisseur
-                        // Ne pas inclure p.Fournisseur ici
-                    })
+                return await _context.Produits
+                    .Include(p => p.Fournisseur) // si Fournisseur existe
+                    .Include(p => p.Dimensions)  // si Dimensions existe
+                    .Where(p => p.Description != null && p.Description.Trim() != "") // filtre minimal
                     .ToListAsync();
-
-                return Ok(produits);
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine($"⚠️ FormatException: {ex.Message}");
-                return BadRequest("Erreur de format dans les données des produits.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"❌ Erreur serveur: {ex.Message}");
-                return StatusCode(500, "Erreur lors de la récupération des produits.");
+                return StatusCode(500, $"Erreur lors de la récupération des produits : {ex.Message}");
             }
         }
 

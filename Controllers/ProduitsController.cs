@@ -41,7 +41,10 @@ namespace GestEase.Controllers
         {
             try
             {
-                var produit = await _context.Produits.FindAsync(id);
+                var produit = await _context.Produits
+                    .Include(p => p.Fournisseur)  // 🔥 Ici on inclut bien les données du fournisseur
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
                 if (produit == null)
                     return NotFound();
 
@@ -53,6 +56,31 @@ namespace GestEase.Controllers
                 return StatusCode(500, "Erreur lors de la récupération du produit.");
             }
         }
+
+
+        // ✅ Nouveau endpoint pour récupérer un produit par son code fournisseur
+        [HttpGet("by-code/{code}")]
+        public async Task<ActionResult<Produit>> GetProduitByCodeFournisseur(string code)
+        {
+            try
+            {
+                var produit = await _context.Produits
+                    .Include(p => p.Fournisseur)      // Important pour avoir le fournisseur lié
+                    .FirstOrDefaultAsync(p => p.CodeFournisseur == code);
+
+                if (produit == null)
+                    return NotFound();
+
+                return produit;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Erreur lors de GetProduitByCodeFournisseur: {ex.Message}");
+                return StatusCode(500, "Erreur lors de la récupération du produit par code fournisseur.");
+            }
+        }
+
+
 
         [HttpPost]
         public async Task<ActionResult<Produit>> PostProduit(Produit produit)

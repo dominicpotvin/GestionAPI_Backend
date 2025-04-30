@@ -58,6 +58,23 @@ namespace GestEase.Controllers
             return NoContent();
         }
 
+        [HttpDelete("by-commande/{commandeId}")]
+        public async Task<IActionResult> DeleteByCommandeId(int commandeId)
+        {
+            var articles = await _context.ArticlesCommande
+                .Where(a => a.CommandeId == commandeId)
+                .ToListAsync();
+
+            if (!articles.Any())
+                return NotFound();
+
+            _context.ArticlesCommande.RemoveRange(articles);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
         // ✅ POST /api/ArticlesCommande/reception
         [HttpPost("reception")]
         public async Task<IActionResult> ReceptionArticle([FromBody] ReceptionArticleDto dto)

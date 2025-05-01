@@ -24,6 +24,8 @@ namespace GestEase.Data
         public DbSet<Projet> Projets { get; set; } = null!;
         public DbSet<StockProduit> StockProduits { get; set; } = null!;
         public DbSet<Facture> Factures { get; set; } = null!;
+        public DbSet<Utilisateur> Utilisateurs { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -74,6 +74,20 @@ namespace GestEase.Controllers
             return NoContent();
         }
 
+        [HttpGet("by-commande/{commandeId}")]
+        public async Task<ActionResult<IEnumerable<ArticleCommande>>> GetByCommandeId(int commandeId)
+        {
+            var articles = await _context.ArticlesCommande
+                .Where(a => a.CommandeId == commandeId)
+                .ToListAsync();
+
+            if (articles == null || articles.Count == 0)
+                return NotFound();
+
+            return Ok(articles);
+        }
+
+
 
         // ✅ POST /api/ArticlesCommande/reception
         [HttpPost("reception")]

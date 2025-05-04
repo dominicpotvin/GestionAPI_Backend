@@ -67,6 +67,13 @@ namespace GestEase.Data
                     .HasForeignKey(c => c.ProjetId)
                     .OnDelete(DeleteBehavior.SetNull);
 
+                modelBuilder.Entity<CommandeFournisseur>()
+                    .HasOne(c => c.Utilisateur)
+                    .WithMany()
+                    .HasForeignKey(c => c.UtilisateurId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+
                 modelBuilder.Entity<CommandeClient>()
                     .HasOne(c => c.Client)
                     .WithMany()

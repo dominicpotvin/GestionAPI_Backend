@@ -22,6 +22,9 @@ namespace GestEase.Models
         [Column("projet_id")]
         public int? ProjetId { get; set; }
 
+        [Column("utilisateur_id")]
+        public int? UtilisateurId { get; set; }
+
         [Column("montant_total")]
         public double? MontantTotal { get; set; }
 
@@ -43,7 +46,10 @@ namespace GestEase.Models
         [Column("date_modification")]
         public DateTime DateModification { get; set; }
 
+        // 🔗 Relations
         public Fournisseur? Fournisseur { get; set; }
         public Projet? Projet { get; set; }
+
+        public Utilisateur? Utilisateur { get; set; } // 🔗 Ajout navigation vers utilisateur
     }
 }

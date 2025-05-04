@@ -1,28 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GestEase.Models
+public class Utilisateur
 {
-    [Table("utilisateurs")]
-    public class Utilisateur
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [Column("nom")]
-        public string Nom { get; set; } = string.Empty;
+    [Column("nom")]
+    public string Nom { get; set; } = string.Empty;
 
-        [Column("initiales")]
-        public string Initiales { get; set; } = string.Empty;
+    [Column("initiales")]
+    public string Initiales { get; set; } = string.Empty;
 
-        [Column("mot_de_passe")]
-        public string MotDePasse { get; set; } = string.Empty;
+    [Column("mot_de_passe")]
+    public string MotDePasse { get; set; } = string.Empty;
 
-        [Column("role")]
-        public string Role { get; set; } = "operateur";
+    [Column("role")]
+    public string? Role { get; set; }
 
-        [Column("actif")]
-        public bool Actif { get; set; } = true;
+    [Column("actif")]
+    public bool Actif { get; set; } = true;
 
-        [Column("date_creation")]
-        public DateTime DateCreation { get; set; } = DateTime.Now;
-    }
+    [Column("date_creation")]
+    public DateTime DateCreation { get; set; } = DateTime.Now;
 }
+

@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using GestEase.Data;
 using GestEase.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestEase.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class StockProduitController : ControllerBase

@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using GestEase.DTO;
-
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -25,12 +25,14 @@ public class UtilisateursController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<Utilisateur>>> GetAll()
     {
         return await _context.Utilisateurs.ToListAsync();
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Utilisateur>> GetById(int id)
     {
         var user = await _context.Utilisateurs.FindAsync(id);
@@ -38,6 +40,7 @@ public class UtilisateursController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public IActionResult Login([FromBody] LoginRequest request)
     {
         try
@@ -89,8 +92,19 @@ public class UtilisateursController : ControllerBase
         }
     }
 
+    [HttpGet("config")]
+    [Authorize]
+    public ActionResult<ClientConfigDto> GetClientConfig()
+    {
+        var config = new ClientConfigDto();
+        return Ok(config);
+    }
+
+
+
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Utilisateur>> Create(Utilisateur user)
     {
         _context.Utilisateurs.Add(user);

@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using GestEase.Data;
 using GestEase.Models;
 using GestEase.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestEase.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ArticlesCommandeController : ControllerBase

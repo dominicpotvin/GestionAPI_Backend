@@ -2,9 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using GestEase.Data;
 using GestEase.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace GestEase.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DocumentsController : ControllerBase
